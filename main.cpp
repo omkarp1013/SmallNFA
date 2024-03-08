@@ -9,25 +9,29 @@ int main() {
     int n;
     cin >> n;
 
+    vector<int> nugs = nuggets(n);
     vector<int> p = primes(n);
     
     
 }
 
-int* nuggets(int n) {
+vector<int> nuggets(int n) {
+    vector<int> res;
     
+    for (int i = 0; )
 }
 
 vector<int> primes(int n) {
     // Finds primes p1, p2, ..., pl
     vector<int> res;
     
-    while (n > 0) {
-        for (int i = 2; i < sqrt(n); i++) {
-            if (is_prime(i)) {
-                res.push_back(i);
-                n /= i;
-            }
+    int i = 2;
+    int curr_product = 1;
+    while (curr_product < n) {
+        if (is_prime(i)) {
+            res.push_back(i);
+            curr_product *= i;
+            i += 1;
         }
     }
     return res;
