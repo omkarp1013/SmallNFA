@@ -11,14 +11,40 @@ int main() {
 
     vector<int> nugs = nuggets(n);
     vector<int> p = primes(n);
+    int l = p.size();
+    int s = max(nugs[0], nugs[1]) + nugs[2] + reduce(p.begin(), p.end());
+
+    for (int i = 0; i < nugs.size(); i++) {
+        cout << nugs[i];
+    }
+
+    cout << l;
     
+    for (int i = 0; i < l; i++) {
+        cout << p[i];
+    }
+
+    cout << s;
     
 }
 
 vector<int> nuggets(int n) {
     vector<int> res;
-    
-    for (int i = 0; )
+    int x = sqrt(n);
+    int y = floor(sqrt(n));
+
+    while (true) {
+        if (gcd(x, y) == 1 && x * y - x - y < 4 * sqrt(n)) {
+            res.push_back(x);
+            res.push_back(y);
+            res.push_back(n - x * y - x - y);
+            break;
+        } else {
+            x -= 1;
+            y += 1;
+        }
+    }
+    return res;
 }
 
 vector<int> primes(int n) {
