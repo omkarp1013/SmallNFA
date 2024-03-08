@@ -44,10 +44,12 @@ int gcd(int x, int y) {
 
 
 vector<int> nuggets(int n) {
+    // Find nuggets x, y such that xy - x - y <= 4sqrt(n)
     vector<int> res;
-    for (int x = sqrt(n); x <= sqrt(n) + 4; ++x) {
-        for (int y = x; y <= sqrt(n) + 4; ++y) {
-            if (gcd(x, y) == 1 && (n - (x * y - x - y) <= 4 * sqrt(n))) {
+    int sqrtN = sqrt(n);
+    for (int x = sqrtN; x <= sqrtN + 4; ++x) {
+        for (int y = x; y <= sqrtN + 4; ++y) {
+            if (gcd(x, y) == 1 && (n - (x * y - x - y) <= 4 * sqrtN)) {
                 res.push_back(x);
                 res.push_back(y);
                 res.push_back(n - (x * y - x - y));
@@ -62,8 +64,8 @@ vector<int> primes(int n) {
     vector<int> res;
     
     int i = 2;
-    int curr_product = 1;
-    while (curr_product < n) {
+    long long curr_product = 1;
+    while (cugrr_product < n) {
         if (is_prime(i)) {
             res.push_back(i);
             curr_product *= i;
