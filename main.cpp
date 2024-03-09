@@ -65,29 +65,27 @@ vector<ll> primes(int n) {
     // Finds primes p1, p2, ..., pl
     vector<ll> res;
     
-    int i = 2;
+    int i = 0;
     long long curr_product = 1;
     vector<ll> primes = generate_primes(n);
     while (curr_product < n) {
-        if (is_prime(i)) {
-            res.push_back(i);
-            curr_product *= i;
-        }
+        curr_product *= primes[i];
+        res.push_back(primes[i]);
         i += 1;
     }
     return res;
 }
 
-std::vector<ll> generate_primes(int n) {
+vector<ll> generate_primes(int n) {
     ll limit = sqrt(n);
-    std::vector<bool> isPrime(limit + 1, true);
-    std::vector<ll> res;
+    vector<bool> primes(limit + 1, true);
+    vector<ll> res;
 
     for (ll p = 2; p <= limit; p++) {
-        if (isPrime[p]) {
+        if (primes[p]) {
             res.push_back(p);
             for (ll i = p * p; i <= limit; i += p) {
-                isPrime[i] = false;
+                primes[i] = false;
             }
         }
     }
