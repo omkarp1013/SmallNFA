@@ -7,19 +7,19 @@ using namespace std;
 
 #define ll long long
 
-vector<ll> nuggets(int n);
-vector<ll> primes(int n);
-vector<ll> generate_primes(int n);
-int gcd(int x, int y);
+vector<ll> nuggets(ll n);
+vector<ll> primes(ll n);
+vector<ll> generate_primes(ll n);
+ll gcd(ll x, ll y); 
 
 int main() {
-    int n;
+    ll n;
     cin >> n;
 
     vector<ll> nugs = nuggets(n);
     vector<ll> p = primes(n);
-    int l = p.size();
-    int s = max(nugs[0], nugs[1]) + nugs[2] + accumulate(p.begin(), p.end(), 0);
+    ll l = p.size();
+    ll s = max(nugs[0], nugs[1]) + nugs[2] + accumulate(p.begin(), p.end(), 0);
 
     for (int i = 0; i < nugs.size(); i++) {
         cout << nugs[i] << " ";
@@ -45,12 +45,12 @@ ll gcd(ll x, ll y) {
 }
 
 
-vector<ll> nuggets(int n) {
+vector<ll> nuggets(ll n) {
     // Find nuggets x, y such that xy - x - y <= 4sqrt(n)
     vector<ll> res;
-    int sqrtN = sqrt(n);
-    for (ll x = sqrtN; x <= sqrtN + 20; ++x) {
-        for (ll y = x; y <= sqrtN + 20; ++y) {
+    ll sqrtN = sqrt(n);
+    for (ll x = sqrtN; x <= 2 * sqrtN; ++x) {
+        for (ll y = x; y <= 2 * sqrtN; ++y) {
             if (gcd(x, y) == 1 && (n - (x * y - x - y) <= 4 * sqrtN)) {
                 res.push_back(x);
                 res.push_back(y);
@@ -61,11 +61,11 @@ vector<ll> nuggets(int n) {
     }
 }
 
-vector<ll> primes(int n) {
+vector<ll> primes(ll n) {
     // Finds primes p1, p2, ..., pl
     vector<ll> res;
     
-    int i = 0;
+    ll i = 0;
     long long curr_product = 1;
     vector<ll> primes = generate_primes(n);
     while (curr_product < n) {
@@ -76,7 +76,7 @@ vector<ll> primes(int n) {
     return res;
 }
 
-vector<ll> generate_primes(int n) {
+vector<ll> generate_primes(ll n) {
     ll limit = sqrt(n);
     vector<bool> primes(limit + 1, true);
     vector<ll> res;
