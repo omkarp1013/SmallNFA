@@ -5,17 +5,19 @@
 #include <vector>
 using namespace std;
 
-vector<int> nuggets(int n);
-vector<int> primes(int n);
-bool is_prime(int n);
+#define ll long long
+
+vector<ll> nuggets(int n);
+vector<ll> primes(int n);
+vector<ll> generate_primes(int n);
 int gcd(int x, int y);
 
 int main() {
     int n;
     cin >> n;
 
-    vector<int> nugs = nuggets(n);
-    vector<int> p = primes(n);
+    vector<ll> nugs = nuggets(n);
+    vector<ll> p = primes(n);
     int l = p.size();
     int s = max(nugs[0], nugs[1]) + nugs[2] + accumulate(p.begin(), p.end(), 0);
 
@@ -33,9 +35,9 @@ int main() {
     return 0;
 }
 
-int gcd(int x, int y) {
+ll gcd(ll x, ll y) {
     while (y != 0) {
-        int temp = y;
+        ll temp = y;
         y = x % y;
         x = temp;
     }
@@ -43,12 +45,12 @@ int gcd(int x, int y) {
 }
 
 
-vector<int> nuggets(int n) {
+vector<ll> nuggets(int n) {
     // Find nuggets x, y such that xy - x - y <= 4sqrt(n)
-    vector<int> res;
+    vector<ll> res;
     int sqrtN = sqrt(n);
-    for (int x = sqrtN; x <= sqrtN + 4; ++x) {
-        for (int y = x; y <= sqrtN + 4; ++y) {
+    for (ll x = sqrtN; x <= sqrtN + 20; ++x) {
+        for (ll y = x; y <= sqrtN + 20; ++y) {
             if (gcd(x, y) == 1 && (n - (x * y - x - y) <= 4 * sqrtN)) {
                 res.push_back(x);
                 res.push_back(y);
@@ -59,13 +61,14 @@ vector<int> nuggets(int n) {
     }
 }
 
-vector<int> primes(int n) {
+vector<ll> primes(int n) {
     // Finds primes p1, p2, ..., pl
-    vector<int> res;
+    vector<ll> res;
     
     int i = 2;
     long long curr_product = 1;
-    while (cugrr_product < n) {
+    vector<ll> primes = generate_primes(n);
+    while (curr_product < n) {
         if (is_prime(i)) {
             res.push_back(i);
             curr_product *= i;
@@ -75,12 +78,19 @@ vector<int> primes(int n) {
     return res;
 }
 
-bool is_prime(int n) {
-    // Tests if a number is prime
-    for (int i = 2; i <= sqrt(n); i++) {
-        if (n % i == 0) {
-            return false;
+std::vector<ll> generate_primes(int n) {
+    ll limit = sqrt(n);
+    std::vector<bool> isPrime(limit + 1, true);
+    std::vector<ll> res;
+
+    for (ll p = 2; p <= limit; p++) {
+        if (isPrime[p]) {
+            res.push_back(p);
+            for (ll i = p * p; i <= limit; i += p) {
+                isPrime[i] = false;
+            }
         }
     }
-    return true;
+
+    return res;
 }
